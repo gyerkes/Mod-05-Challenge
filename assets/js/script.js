@@ -8,11 +8,16 @@ $(document).ready(function () {
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
+  let today = dayjs();
 
-  const saveButton = document.querySelector('.saveBtn');
+  $('#currentDay').text(today.format('dddd, MMMM DD'));
 
-  saveButton = addEventListener('click', function() {
-    
+
+  $(".saveBtn").on('click', function () {
+    // event.preventDefault();
+    let description = $(this).siblings(".description").val();
+    let time = $(this).parent().attr("id").split("-")[1];
+    localStorage.setItem(time, description);
   })
 
 
@@ -22,14 +27,45 @@ $(document).ready(function () {
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
+
+  let currentHour = dayjs().format('HH');
+  console.log(currentHour);
+
+  $(".time-block").each(function () {
+    let hourDiv = $(this).attr('id').split('-')[1];
+
+    if (currentHour == hourDiv) {
+      $(this).addClass("present");
+      $(this).children(".description").addClass("white-text");
+    }
+    else if (currentHour < hourDiv) {
+      $(this).removeClass("present");
+      $(this).addClass("future");
+    }
+    else if (currentHour > hourDiv) {
+      $(this).removeClass("future");
+      $(this).addClass("past");
+
+    }
+  })
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
   //
+  $("#hour-9 .time-block").val(localStorage.getItem("9"));
+  $("#hour-10 .time-block").val(localStorage.getItem("10"));
+  $("#hour-11 .time-block").val(localStorage.getItem("11"));
+  $("#hour-12 .time-block").val(localStorage.getItem("12"));
+  $("#hour-13 .time-block").val(localStorage.getItem("13"));
+  $("#hour-14 .time-block").val(localStorage.getItem("14"));
+  $("#hour-15 .time-block").val(localStorage.getItem("15"));
+  $("#hour-16 .time-block").val(localStorage.getItem("16"));
+  $("#hour-17 .time-block").val(localStorage.getItem("17"));
+
   // TODO: Add code to display the current date in the header of the page.
- 
- 
-  $('#currentDay').text(dayjs().format('dddd, MMMM Do'));
+
+
+
 
 });
