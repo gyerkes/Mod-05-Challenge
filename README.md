@@ -32,4 +32,4 @@ WHEN I refresh the page
 THEN the saved events persist
 ```
 
-![alt text](./Assets/images/solution.jpg)
+![alt text](./Assets/images/solution.img)
